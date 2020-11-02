@@ -402,7 +402,9 @@ class InputNumber extends React.Component<Partial<InputNumberProps>, InputNumber
     }
     const valueString = String(value);
     if (valueString.indexOf('e-') >= 0) {
-      return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
+      const validString = valueString.slice(0, valueString.indexOf('e-'));
+      const extraDigits = validString.split('.')[1] ? validString.split('.')[1].length : 0;
+      return +valueString.slice(valueString.indexOf('e-') + 2) + extraDigits;
     }
     let precision = 0;
     if (valueString.indexOf('.') >= 0) {
